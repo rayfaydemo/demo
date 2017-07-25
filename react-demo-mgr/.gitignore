@@ -1,0 +1,10 @@
+.idea
+dist
+node_modules
+yarn.lock
+npm-debug.log
+<<<<<<< HEAD
+/target/
+=======
+/target
+>>>>>>> a67b33577d7e6b83d9e97bcad771fe1b198d5299

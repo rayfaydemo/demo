@@ -1,0 +1,13 @@
+---
+applications:
+- name: demo-management
+  memory: 1024M
+path: target/demo-1.0-SNAPSHOT.jar
+buildpack: java_buildpack
+#routes:
+#  - route:  oper-mgr2.apps.cftest.net
+env:
+    CF_TARGET: https://api.system.cftest.net
+#    JAVA_OPTS: -agentlib:jdwp=transport=dt_socket,server=n,address=192.168.120.134:16000,suspend=y
+#    -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=16000
+

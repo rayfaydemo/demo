@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="http://rayfay.com/schema/module"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://rayfay.com/schema/module http://www.rayfay.com/schema/modules/module-1.0.xsd">
+	<roles>
+		 <role name="super_admin" title="超级管理员" type="SUPER_ADMIN" />
+	</roles>
+	<users>
+		<user name="ajadmin" belongs="super_admin"></user>
+	</users>
+	<console>
+		<menu id="system.main" title="系统管理" primary="true" icon="">
+			<item id="user.menus" title="菜单管理" index="1" action="/user_menus" check=""/>
+			<item id="user.role" title="角色管理" index="3" action="/user_role" check="" icon=""/>
+			<item id="user.account" title="账户管理" index="2" action="/userAccounts" check=""/>
+			<item id="user.group" title="用户组" index="4" action="/userGroups" check="">
+			</item>
+		</menu>
+	</console>
+</module>

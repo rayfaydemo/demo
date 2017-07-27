@@ -5,7 +5,7 @@ module.exports = {
   logo: '/logo.png',
   iconFontCSS: '/iconfont.css',
   iconFontJS: '/iconfont.js',
-  baseURL: 'http://demo-management.apps.cftest.net',
+  baseURL: 'http://oper-management.apps.cftest.net/',
   YQL: ['http://www.zuimeitianqi.com'],
   CORS: ['http://localhost:7000', 'http://localhost:8000','http://localhost:8088', 'http://localhost:8082', 'http://localhost:8080','http://demo-management.apps.cftest.net'],
   openPages: ['/login'],

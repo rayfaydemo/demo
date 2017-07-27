@@ -177,6 +177,14 @@ const Routers = function ({ history, app }) {
             }, 'chart-areaChart')
           },
         }, {
+          path: 'employee/employeeList',
+          getComponent (nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/employee/employeeList')) //  加载指定的model
+              cb(null, require('./routes/employee/employeeList/'))  //  加载指定的画面
+            }, 'employee-employeeList')
+          },
+        }, {
           path: '*',
           getComponent (nextState, cb) {
             require.ensure([], (require) => {

@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.client.ApiClient;
 import com.example.entity.EmployeeInfo;
 import com.example.message.SystemErrorCodeType;
 import com.example.service.EmployeeService;
@@ -28,24 +29,28 @@ public class EmployeeController {
     private Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 
     @Autowired
+    private ApiClient apiClient;
+
+    @Autowired
     private EmployeeService employeeService;
 
-    @ApiOperation(value = "获取人员信息", notes = "分页获取人员信息", httpMethod = "GET")
-    @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "pageSize", value = "显示行数", paramType = "query", dataType = "int"),
-            @ApiImplicitParam(name = "pageNumber", value = "页码", paramType = "query", dataType = "int"),
-            @ApiImplicitParam(name = "name", value = "名称", paramType = "query", dataType = "string")})
+//    @Autowired
+//    public EmployeeController(ApiClient apiClient) {
+//        this.apiClient = apiClient;
+//    }
+
     @RequestMapping(value = "getPageable", method = RequestMethod.GET)
     public Object getEmployeesPageable(@RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
                                   @RequestParam(name = "pageNumber", defaultValue = "1") int pageNumber,
                                        @RequestParam(name = "name", required = false) String name) {
-        logger.info("paras:pageSize={},pageNumber={},name={}",pageSize,pageNumber,name);
-        try {
-            Page<EmployeeInfo> result = employeeService.findPageable(pageSize,pageNumber-1,name);
-            return ResponseUtil.makeSuccessResponse(result.getTotalElements(), result.getContent());
-        } catch (Exception e) {
-            throw new NRAPException(SystemErrorCodeType.E_GET_DATA_FALED);
-        }
+//        logger.info("paras:pageSize={},pageNumber={},name={}",pageSize,pageNumber,name);
+//        try {
+//            Page<EmployeeInfo> result = employeeService.findPageable(pageSize,pageNumber-1,name);
+//            return ResponseUtil.makeSuccessResponse(result.getTotalElements(), result.getContent());
+//        } catch (Exception e) {
+//            throw new NRAPException(SystemErrorCodeType.E_GET_DATA_FALED);
+//        }
+        return apiClient.getEmployeePageable(pageSize,pageNumber,name);
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
@@ -53,6 +58,8 @@ public class EmployeeController {
     public Object addEmployee(@RequestBody EmployeeInfo data) {
         try {
             employeeService.save(data);
+            int i=0;
+            int a = 20/i;
             return  ResponseUtil.makeSuccessResponse();
         } catch (Exception e) {
             throw new NRAPException(SystemErrorCodeType.E_ACTION_FALED,"增加");

@@ -1,0 +1,3 @@
+##sql fixture
+com.rayfay.bizcloud.core.commons.fixture.SqlFixture=\
+                demo_init_sql.sql

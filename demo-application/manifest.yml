@@ -1,0 +1,17 @@
+---
+applications:
+- name: demo-application
+  memory: 2048M
+path: target/demo-application-1.0-SNAPSHOT.jar
+buildpack: java_buildpack
+env:
+    CF_TARGET: https://api.system.cftest.net
+    clientId : hiauwfhfi2398
+    clientKey : dfna8302n;fe;g-4208[qf
+services:
+- nrap_bus_mq
+- eureka-for-int
+- mysql-for-demo-application
+#    JAVA_OPTS: -agentlib:jdwp=transport=dt_socket,server=n,address=192.168.11.4:7600,suspend=y
+#    -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=16000
+

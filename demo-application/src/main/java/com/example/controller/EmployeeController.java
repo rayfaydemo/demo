@@ -19,6 +19,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by HP on 2017/7/25.
  */
@@ -34,11 +37,6 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-//    @Autowired
-//    public EmployeeController(ApiClient apiClient) {
-//        this.apiClient = apiClient;
-//    }
-
     @RequestMapping(value = "getPageable", method = RequestMethod.GET)
     public Object getEmployeesPageable(@RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
                                   @RequestParam(name = "pageNumber", defaultValue = "1") int pageNumber,
@@ -53,13 +51,28 @@ public class EmployeeController {
         return apiClient.getEmployeePageable(pageSize,pageNumber,name);
     }
 
+    @RequestMapping(value = "get", method = RequestMethod.GET)
+    public Object getEmployeeInfo(@RequestParam long id) {
+        logger.info("paras:id={}",id);
+        try {
+            List<EmployeeInfo> result = new ArrayList<>();
+            EmployeeInfo info = employeeService.findOne(id);
+            if(null != result)
+            {
+                result.add(info);
+            }
+            return ResponseUtil.makeSuccessResponse(result.size(), result);
+        } catch (Exception e) {
+            throw new NRAPException(SystemErrorCodeType.E_GET_DATA_FALED);
+        }
+    }
+
     @RequestMapping(value = "add", method = RequestMethod.POST)
     @Transactional
     public Object addEmployee(@RequestBody EmployeeInfo data) {
         try {
             employeeService.save(data);
-            int i=0;
-            int a = 20/i;
+
             return  ResponseUtil.makeSuccessResponse();
         } catch (Exception e) {
             throw new NRAPException(SystemErrorCodeType.E_ACTION_FALED,"增加");
@@ -71,6 +84,9 @@ public class EmployeeController {
         try {
             EmployeeInfo dbData = employeeService.findOne(data.getId());
             dbData.setName(data.getName());
+            dbData.setAddress(data.getAddress());
+            dbData.setSex(data.getSex());
+            dbData.setTelNumber(data.getTelNumber());
             employeeService.save(dbData);
             return  ResponseUtil.makeSuccessResponse();
         } catch (Exception e) {

@@ -1,1 +1,1 @@
-INSERT INTO employee_info(address, name, sex, tel_number) VALUES( 'xxx,xxx,xxx', 'lihua', '2', '13999999999');
+INSERT INTO employee_info(address, name, sex, tel_number) VALUES( 'xxx,xxx,xxx', 'lihua', '1', '13999999999');

@@ -11,7 +11,8 @@ env:
 services:
 - nrap_bus_mq
 - eureka-for-int
-- mysql-for-demo-application
+- oracle-demo-oracle-rds1
+#- mysql-for-demo-application
 #    JAVA_OPTS: -agentlib:jdwp=transport=dt_socket,server=n,address=192.168.11.4:7600,suspend=y
 #    -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=16000
 

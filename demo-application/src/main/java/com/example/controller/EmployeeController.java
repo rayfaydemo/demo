@@ -1,24 +1,18 @@
 package com.example.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.example.client.ApiClient;
 import com.example.entity.EmployeeInfo;
 import com.example.message.SystemErrorCodeType;
 import com.example.service.EmployeeService;
 import com.example.utils.ResponseUtil;
 import com.rayfay.bizcloud.core.commons.exception.NRAPException;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,14 +35,15 @@ public class EmployeeController {
     public Object getEmployeesPageable(@RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
                                   @RequestParam(name = "pageNumber", defaultValue = "1") int pageNumber,
                                        @RequestParam(name = "name", required = false) String name) {
-//        logger.info("paras:pageSize={},pageNumber={},name={}",pageSize,pageNumber,name);
-//        try {
-//            Page<EmployeeInfo> result = employeeService.findPageable(pageSize,pageNumber-1,name);
-//            return ResponseUtil.makeSuccessResponse(result.getTotalElements(), result.getContent());
-//        } catch (Exception e) {
-//            throw new NRAPException(SystemErrorCodeType.E_GET_DATA_FALED);
-//        }
-        return apiClient.getEmployeePageable(pageSize,pageNumber,name);
+        logger.info("parameters:pageSize={},pageNumber={},name={}",pageSize,pageNumber,name);
+        try {
+            Page<EmployeeInfo> result = employeeService.findPageable(pageSize,pageNumber-1,name);
+            return ResponseUtil.makeSuccessResponse(result.getTotalElements(), result.getContent());
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new NRAPException(SystemErrorCodeType.E_GET_DATA_FALED);
+        }
+       // return apiClient.getEmployeePageable(pageSize,pageNumber,name);
     }
 
     @RequestMapping(value = "get", method = RequestMethod.GET)
@@ -68,14 +63,13 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    @Transactional
+    //@Transactional
     public Object addEmployee(@RequestBody EmployeeInfo data) {
         try {
             employeeService.save(data);
-
             return  ResponseUtil.makeSuccessResponse();
         } catch (Exception e) {
-            throw new NRAPException(SystemErrorCodeType.E_ACTION_FALED,"增加");
+            throw new NRAPException(SystemErrorCodeType.E_ACTION_FALED,e.getMessage()+"增加");
         }
     }
 

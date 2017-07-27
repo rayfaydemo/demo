@@ -165,12 +165,6 @@
     <orderEntry type="library" name="Maven: io.github.openfeign:feign-slf4j:9.3.1" level="project" />
     <orderEntry type="library" name="Maven: io.github.openfeign:feign-hystrix:9.3.1" level="project" />
     <orderEntry type="library" name="Maven: io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry:1.1.2.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: io.pivotal.spring.cloud:spring-cloud-services-cloudfoundry-connector:1.1.2.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: io.pivotal.spring.cloud:spring-cloud-services-connector-core:1.1.2.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-core:1.2.3.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-cloudfoundry-connector:1.2.3.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: io.pivotal.spring.cloud:spring-cloud-services-spring-connector:1.1.2.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-spring-service-connector:1.2.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: io.pivotal.spring.cloud:cloudfoundry-certificate-truster:1.0.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-starter-sleuth:1.1.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-sleuth-core:1.1.3.RELEASE" level="project" />
@@ -244,6 +238,13 @@
     <orderEntry type="library" name="Maven: io.github.openfeign.form:feign-form-spring:2.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.jasypt:jasypt:1.9.2" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.29" level="project" />
-    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.38" level="project" />
+    <orderEntry type="library" name="Maven: com.cloudfoundry.connector:oracle-connector:0.1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: io.pivotal.spring.cloud:spring-cloud-services-cloudfoundry-connector:1.1.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: io.pivotal.spring.cloud:spring-cloud-services-connector-core:1.1.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-core:1.2.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-cloudfoundry-connector:1.2.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: io.pivotal.spring.cloud:spring-cloud-services-spring-connector:1.1.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-spring-service-connector:1.2.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: com.oracle:ojdbc14:10.2.0.4.0" level="project" />
   </component>
 </module>

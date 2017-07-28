@@ -185,6 +185,14 @@ const Routers = function ({ history, app }) {
             }, 'employee-employeeList')
           },
         }, {
+          path: 'employee/employeeView/:id',
+          getComponent (nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/employee/employeeView')) //  加载指定的model
+              cb(null, require('./routes/employee/employeeView/'))  //  加载指定的画面
+            }, 'employee-employeeView')
+          },
+        }, {
           path: '*',
           getComponent (nextState, cb) {
             require.ensure([], (require) => {

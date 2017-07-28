@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react'
-import { Table } from 'antd'
+import { Table, Popconfirm } from 'antd'
+import { Link } from 'dva/router'
 
-const EmployeeListTable = ({ dispatch, employeeTableDataSource, employeeTableLoading, pagination }) => {
+const EmployeeListTable = ({ dispatch, employeeTableDataSource, employeeTableLoading, pagination, editEmployee, delEmployee }) => {
   // 定义表格列
   const columns = [
     {
@@ -10,13 +11,14 @@ const EmployeeListTable = ({ dispatch, employeeTableDataSource, employeeTableLoa
       width: 100,
     },
     {
-      title: '电话',
-      dataIndex: 'phone',
+      title: '性别',
+      dataIndex: 'sex',
       width: 100,
+      render: (text, record) => (<span>{record.sex === '1' ? '男' : '女'}</span>),
     },
     {
-      title: '年龄',
-      dataIndex: 'age',
+      title: '电话',
+      dataIndex: 'telNumber',
       width: 100,
     },
     {
@@ -25,19 +27,19 @@ const EmployeeListTable = ({ dispatch, employeeTableDataSource, employeeTableLoa
       width: 100,
     },
     {
-      title: '性别',
-      dataIndex: 'isMale',
+      title: '操作',
       width: 100,
-    },
-    {
-      title: 'email',
-      dataIndex: 'email',
-      width: 100,
-    },
-    {
-      title: '创建时间',
-      dataIndex: 'createTime',
-      width: 100,
+      render: (text, record) => (
+        <div>
+          <a onClick={() => editEmployee(record)}>编辑</a>
+          <span className="ant-divider" />
+          <Popconfirm title="是否确认删除该职员?" onConfirm={() => delEmployee(record.id)} okText="是" cancelText="否">
+            <a href="#" style={{ color: 'red' }}>删除</a>
+          </Popconfirm>
+          <span className="ant-divider" />
+          <Link to={`/employee/employeeView/${record.id}`}>查看</Link>
+        </div>
+      ),
     },
   ]
 
@@ -70,6 +72,7 @@ EmployeeListTable.propTypes = {
   employeeTableDataSource: PropTypes.array,
   pagination: PropTypes.object,
   employeeTableLoading: PropTypes.bool,
+  editEmployee: PropTypes.func,
 }
 
 export default EmployeeListTable

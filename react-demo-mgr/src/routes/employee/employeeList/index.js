@@ -2,12 +2,13 @@ import React, { PropTypes } from 'react'
 import { connect } from 'dva'
 import { Col, Input, Row, Button } from 'antd'
 import EmployeeListTable from './employeeListTable'
+import EmployeeCreateModel from './employeeCreateModel'
 
 
 // 定义画面接口参数，其中employeeList就是我们在model里面设定的namespace
 const EmployeeList = ({ location, dispatch, employeeList, loading, app }) => {
   // 展开state中的属性
-  const { employeeTableDataSource, employeeTableLoading, txtEmployeeName, pagination } = employeeList
+  const { employeeTableDataSource, employeeTableLoading, txtEmployeeName, pagination, createModelVisible, editObj } = employeeList
 
   // 传递给表格组件的属性
   const tableProp = {
@@ -15,6 +16,22 @@ const EmployeeList = ({ location, dispatch, employeeList, loading, app }) => {
     employeeTableDataSource,
     employeeTableLoading,
     pagination,
+    editEmployee (record) {
+      dispatch({
+        type: 'employeeList/editEmployee',
+        payload: {
+          editObj: record,
+        },
+      })
+    },
+    delEmployee (id) {
+      dispatch({
+        type: 'employeeList/deleteEmployee',
+        payload: {
+          id,
+        },
+      })
+    },
   }
 
   const onChange = (e) => {
@@ -35,6 +52,41 @@ const EmployeeList = ({ location, dispatch, employeeList, loading, app }) => {
     })
   }
 
+  const modalProps = {
+    visible: createModelVisible,
+    maskClosable: false,
+    confirmLoading: loading.effects['employeeList/saveEmployee'],
+    onCancel () {
+      dispatch({
+        type: 'employeeList/setCreateModelVisible',
+        payload: {
+          createModelVisible: false,
+          editObj: null,
+        },
+      })
+    },
+    onOk (data) {
+      dispatch({
+        type: 'employeeList/saveEmployee',
+        payload: {
+          ...data,
+        },
+      })
+    },
+    dispatch,
+    editObj,
+  }
+
+  const showCreateModal = () => {
+    dispatch({
+      type: 'employeeList/setCreateModelVisible',
+      payload: {
+        createModelVisible: true,
+        editObj: null,
+      },
+    })
+  }
+
   return (
     <div className="content-inner">
       <Row gutter={24}>
@@ -43,6 +95,12 @@ const EmployeeList = ({ location, dispatch, employeeList, loading, app }) => {
         </Col>
         <Col md={{ span: 6 }}>
           <Button type="primary" icon="search" onClick={onClick}>查询</Button>
+        </Col>
+      </Row>
+      <Row gutter={24} style={{ marginTop: '10px' }}>
+        <Col span={24}>
+          <Button icon="plus" type="primary" onClick={showCreateModal}>新增职员</Button>
+          {createModelVisible && <EmployeeCreateModel {...modalProps} /> }
         </Col>
       </Row>
       <Row gutter={24} style={{ marginTop: '10px' }}>

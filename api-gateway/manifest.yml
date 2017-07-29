@@ -1,0 +1,16 @@
+---
+applications:
+- name: api-gateway
+  memory: 1024M
+path: target/api-gateway-1.0-SNAPSHOT.jar
+buildpack: java_buildpack_offline
+env:
+    CF_TARGET: https://api.system.devpcf.com
+    #JAVA_OPTS: -agentlib:jdwp=transport=dt_socket,server=n,address=192.168.120.134:16000,suspend=y
+#    -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=16000
+services:
+- nrap_bus_mq
+- eureka-for-int
+- redis-apigateway
+- mysql-for-apigateway
+

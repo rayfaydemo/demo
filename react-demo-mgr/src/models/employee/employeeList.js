@@ -1,5 +1,5 @@
 import { config } from '../../utils'
-import { getEmployeeTableDataSource } from '../../services/employee'
+import { getEmployeeTableDataSource, createEmployee, updateEmployee, deleteEmployee } from '../../services/employee'
 
 const { defaultPageSize } = config
 
@@ -16,6 +16,8 @@ export default {
       current: 1, // 当前页数
       total: 0,  // 数据总数
     },  // 用来保存翻页控件的信息
+    createModelVisible: false,
+    editObj: null,
   },
 
   subscriptions: {
@@ -39,18 +41,49 @@ export default {
         yield put({
           type: 'getEmployeeTableDataSourceSuccess',
           payload: {
-            employeeTableDataSource: data.result.rows,
+            employeeTableDataSource: data.rows,
             pagination: {
               current: typeof (payload.currentPage) === 'undefined' ? 1 : Number(payload.currentPage),
               pageSize: typeof (payload.pageSize) === 'undefined' ? defaultPageSize : Number(payload.pageSize),
-              total: data.result.totalNum,
+              total: data.rowsTotal,
             },
             employeeTableLoading: false,
           },
         })  // 将返回结果赋值给state
       } else {
         yield put({ type: 'HideLoading' })
-        let error = { message: data }
+        let error = { message: data.message }
+        throw (error) // 抛出错误信息，交给dva处理
+      }
+    },
+
+    * saveEmployee ({ payload }, { call, put }) {
+      const { employee, isCreate } = payload
+      let data
+      if (isCreate) {
+        data = yield call(createEmployee, employee)  // 调用远程服务获取结果
+      } else {
+        data = yield call(updateEmployee, employee)
+      }
+
+      if (data.success) { // 判断获取结果是否成功
+        yield put({ type: 'setCreateModelVisible', payload: { createModelVisible: false, editObj: null } })
+        yield put({ type: 'getEmployeeTableDataSource', payload: {} })
+      } else {
+        yield put({ type: 'HideLoading' })
+        let error = { message: data.message }
+        throw (error) // 抛出错误信息，交给dva处理
+      }
+    },
+
+    * deleteEmployee ({ payload }, { call, put }) {
+      let data = yield call(deleteEmployee, payload)
+      if (data.success) { // 判断获取结果是否成功
+        yield put({ type: 'setCreateModelVisible', payload: { createModelVisible: false, editObj: null } })
+        yield put({ type: 'getEmployeeTableDataSource', payload: {} })
+      } else {
+        yield put({ type: 'HideLoading' })
+        let error = { message: data.message }
         throw (error) // 抛出错误信息，交给dva处理
       }
     },
@@ -64,6 +97,7 @@ export default {
         employeeTableDataSource,
         employeeTableLoading,
         pagination: {
+          ...state.pagination,
           ...pagination,
         },
       } // 展开原有state，并赋值新的属性值
@@ -87,6 +121,21 @@ export default {
       return {
         ...state,
         ...action.payload,
+      }
+    },
+
+    setCreateModelVisible (state, action) {
+      return {
+        ...state,
+        ...action.payload,
+      }
+    },
+
+    editEmployee (state, action) {
+      return {
+        ...state,
+        ...action.payload,
+        createModelVisible: true,
       }
     },
   },

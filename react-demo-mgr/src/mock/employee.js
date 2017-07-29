@@ -8,15 +8,12 @@ const Employee = Mock.mock({
     {
       id: '@id',
       name: '@cname',
-      phone: /^1[34578]\d{9}$/,
-      'age|11-99': 1,
+      telNumber: /^1[34578]\d{9}$/,
       address: '@county(true)',
-      'isMale|+1': [
-        '男',
-        '女',
+      'sex|+1': [
+        '1',
+        '0',
       ],
-      email: '@email',
-      createTime: '@datetime',
     },
   ],
 })
@@ -26,9 +23,9 @@ let database = Employee.data
 module.exports = {
   [`GET ${apiPrefix}/getEmployeeTableDataSource`] (req, res) {
     const { query } = req
-    let { pageSize, currentPage, name } = query
+    let { pageSize, pageNumber, name } = query
     pageSize = pageSize || defaultPageSize
-    currentPage = currentPage || 1
+    pageNumber = pageNumber || 1
 
     let newData = database
     if (name) {
@@ -37,16 +34,14 @@ module.exports = {
         return item.name.includes(name)
       })
     }
-    let start = currentPage * pageSize
+    let start = pageNumber * pageSize
     let end = Number(start) + Number(pageSize)
 
     console.log(start, end)
     res.status(200).json({
       success: true,
-      result: {
-        rows: newData.slice(start, end),
-        totalNum: newData.length,
-      },
+      rows: newData.slice(start, end),
+      rowsTotal: newData.length,
     })
   },
 }

@@ -67,14 +67,18 @@
 
   <distributionManagement>
     <repository>
-      <id>localMaven_release</id>
+      <id>demoMaven_release</id>
       <name>local maven repo</name>
-      <url>http://121.41.224.94:9393/nexus/content/repositories/releases/</url>
+      <url>
+        http://192.168.105.70:8081/repository/maven-releases/
+      </url>
     </repository>
     <snapshotRepository>
-      <id>localMaven_snapshots</id>
+      <id>demoMaven_snapshots</id>
       <name>local maven repo</name>
-      <url>http://121.41.224.94:9393/nexus/content/repositories/snapshots/</url>
+      <url>
+        http://192.168.105.70:8081/repository/maven-snapshots/
+      </url>
     </snapshotRepository>
   </distributionManagement>
 
